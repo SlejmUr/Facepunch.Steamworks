@@ -171,6 +171,46 @@ namespace Steamworks.Data
 	}
 	
 	[StructLayout( LayoutKind.Sequential, Pack = Platform.StructPlatformPackSize )]
+	internal struct RemotePlayInputMouseMotion_t
+	{
+		[MarshalAs(UnmanagedType.I1)]
+		internal bool Absolute; // m_bAbsolute bool
+		internal float NormalizedX; // m_flNormalizedX float
+		internal float NormalizedY; // m_flNormalizedY float
+		internal int DeltaX; // m_nDeltaX int
+		internal int DeltaY; // m_nDeltaY int
+		
+	}
+	
+	[StructLayout( LayoutKind.Sequential, Pack = Platform.StructPlatformPackSize )]
+	internal struct RemotePlayInputMouseWheel_t
+	{
+		internal RemotePlayMouseWheelDirection Direction; // m_eDirection ERemotePlayMouseWheelDirection
+		internal float Amount; // m_flAmount float
+		
+	}
+	
+	[StructLayout( LayoutKind.Sequential, Pack = Platform.StructPlatformPackSize )]
+	internal struct RemotePlayInputKey_t
+	{
+		internal int Scancode; // m_eScancode int
+		internal uint Modifiers; // m_unModifiers uint32
+		internal uint Keycode; // m_unKeycode uint32
+		
+	}
+	
+	[StructLayout( LayoutKind.Sequential, Pack = Platform.StructPlatformPackSize )]
+	internal struct RemotePlayInput_t
+	{
+		internal uint SessionID; // m_unSessionID RemotePlaySessionID_t
+		internal RemotePlayInputType Type; // m_eType ERemotePlayInputType
+		internal string PaddingUTF8() => Steamworks.Utility.Utf8NoBom.GetString( Padding, 0, System.Array.IndexOf<byte>( Padding, 0 ) );
+		[MarshalAs(UnmanagedType.ByValArray, SizeConst = 56)] // byte[] padding
+		internal byte[] Padding; // padding char [56]
+		
+	}
+	
+	[StructLayout( LayoutKind.Sequential, Pack = Platform.StructPlatformPackSize )]
 	internal partial struct SteamDatagramHostedAddress
 	{
 		internal int CbSize; // m_cbSize int

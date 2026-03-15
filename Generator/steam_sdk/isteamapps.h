@@ -39,7 +39,7 @@ public:
 
 	// Checks if the user is subscribed to the current app through a free weekend
 	// This function will return false for users who have a retail or other type of license
-	// Before using, please ask your Valve technical contact how to package and secure your free weekened
+	// Before using, please ask your Valve technical contact how to package and secure your free weekend
 	virtual bool BIsSubscribedFromFreeWeekend() = 0;
 
 	// Returns the number of DLC pieces for the running app
@@ -116,13 +116,13 @@ public:
 	virtual int  GetNumBetas( int *pnAvailable, int *pnPrivate ) = 0; //
 
 	// return beta branch details, name, description, current BuildID and state flags (EBetaBranchFlags)
-	virtual bool GetBetaInfo( int iBetaIndex, uint32 *punFlags, uint32 *punBuildID, char *pchBetaName, int cchBetaName, char *pchDescription, int cchDescription ) = 0; // iterate through
+	virtual bool GetBetaInfo( int iBetaIndex, uint32 *punFlags, uint32 *punBuildID, char *pchBetaName, int cchBetaName, char *pchDescription, int cchDescription, uint32 *punLastUpdated ) = 0; // iterate through
 
 	// select this beta branch for this app as active, might need the game to restart so Steam can update to that branch
 	virtual bool SetActiveBeta( const char *pchBetaName ) = 0;
 };
 
-#define STEAMAPPS_INTERFACE_VERSION "STEAMAPPS_INTERFACE_VERSION008"
+#define STEAMAPPS_INTERFACE_VERSION "STEAMAPPS_INTERFACE_VERSION009"
 
 // Global interface accessor
 inline ISteamApps *SteamApps();
