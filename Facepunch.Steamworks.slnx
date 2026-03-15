@@ -1,0 +1,19 @@
+<Solution>
+  <Configurations>
+    <Platform Name="Any CPU" />
+    <Platform Name="x64" />
+    <Platform Name="x86" />
+  </Configurations>
+  <Project Path="Facepunch.Steamworks.Test/Facepunch.Steamworks.TestWin32.csproj">
+    <Platform Solution="*|x64" Project="x64" />
+    <Platform Solution="*|x86" Project="x86" />
+  </Project>
+  <Project Path="Facepunch.Steamworks.Test/Facepunch.Steamworks.TestWin64.csproj">
+    <Platform Solution="*|x64" Project="x64" />
+    <Platform Solution="*|x86" Project="x86" />
+  </Project>
+  <Project Path="Facepunch.Steamworks/Facepunch.Steamworks.Posix.csproj" />
+  <Project Path="Facepunch.Steamworks/Facepunch.Steamworks.Win32.csproj" />
+  <Project Path="Facepunch.Steamworks/Facepunch.Steamworks.Win64.csproj" />
+  <Project Path="Generator/Generator.csproj" />
+</Solution>
