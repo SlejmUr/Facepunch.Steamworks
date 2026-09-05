@@ -1,10 +1,7 @@
 ﻿using Steamworks.Data;
 using System;
-using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
-using System.Threading;
-using System.Threading.Tasks;
 
 namespace Steamworks
 {
@@ -14,8 +11,8 @@ namespace Steamworks
 	internal struct CallResult<T> : INotifyCompletion where T : struct, ICallbackData
 	{
 		SteamAPICall_t call;
-		ISteamUtils utils;
-		bool server;
+		readonly ISteamUtils utils;
+		readonly bool server;
 
 		public CallResult( SteamAPICall_t call, bool server )
 		{
@@ -24,8 +21,7 @@ namespace Steamworks
 
 			utils = (server ? SteamUtils.InterfaceServer : SteamUtils.InterfaceClient) as ISteamUtils;
 
-			if ( utils == null )
-				utils = SteamUtils.Interface as ISteamUtils;
+			utils ??= SteamUtils.Interface as ISteamUtils;
 		}
 
 		/// <summary>
@@ -33,7 +29,7 @@ namespace Steamworks
 		/// The Action "continues" the async call. We pass it to the Dispatch
 		/// to be called when the callback returns.
 		/// </summary>
-		public void OnCompleted( Action continuation )
+		public readonly void OnCompleted( Action continuation )
 		{
 			if (IsCompleted)
 				continuation();
@@ -44,7 +40,7 @@ namespace Steamworks
 		/// <summary>
 		/// Gets the result. This is called internally by the async shit.
 		/// </summary>
-		public T? GetResult()
+		public readonly T? GetResult()
 		{
 			bool failed = false;
 			if ( !utils.IsAPICallCompleted( call, ref failed ) || failed )
@@ -64,7 +60,7 @@ namespace Steamworks
 
 				Dispatch.OnDebugCallback?.Invoke( t.CallbackType, Dispatch.CallbackToString( t.CallbackType, ptr, size ), server );
 
-				return ((T)Marshal.PtrToStructure( ptr, typeof( T ) ));
+				return Marshal.PtrToStructure<T>( ptr );
 			}
 			finally
 			{
@@ -75,7 +71,7 @@ namespace Steamworks
 		/// <summary>
 		/// Return true if complete or failed
 		/// </summary>
-		public bool IsCompleted
+		public readonly bool IsCompleted
 		{
 			get
 			{
@@ -90,7 +86,7 @@ namespace Steamworks
 		/// <summary>
 		/// This is what makes this struct awaitable
 		/// </summary>
-		internal CallResult<T> GetAwaiter()
+		internal readonly CallResult<T> GetAwaiter()
 		{
 			return this;
 		}

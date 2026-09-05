@@ -5,15 +5,10 @@ using Steamworks.Data;
 
 namespace Steamworks
 {
-	public class InventoryDef : IEquatable<InventoryDef>
+	public class InventoryDef( InventoryDefId defId ) : IEquatable<InventoryDef>
 	{
-		internal InventoryDefId _id;
+		internal InventoryDefId _id = defId;
 		internal Dictionary<string, string> _properties;
-
-		public InventoryDef( InventoryDefId defId )
-		{
-			_id = defId;
-		}
 
 		public int Id => _id.Value;
 
@@ -65,9 +60,9 @@ namespace Steamworks
 		{
 			if ( string.IsNullOrEmpty( ExchangeSchema ) ) return null;
 
-			var parts = ExchangeSchema.Split( new[] { ';' }, StringSplitOptions.RemoveEmptyEntries );
+			var parts = ExchangeSchema.Split( [';'], StringSplitOptions.RemoveEmptyEntries );
 
-			return parts.Select( x => InventoryRecipe.FromString( x, this ) ).ToArray();
+			return [.. parts.Select( x => InventoryRecipe.FromString( x, this ) )];
 		}
 
 		/// <summary>
@@ -104,8 +99,7 @@ namespace Steamworks
 			if (name == null) //return keys string
 				return vl;
 				
-			if ( _properties == null )
-				_properties = new Dictionary<string, string>();
+			_properties ??= [];
 
 			_properties[name] = vl;
 
@@ -215,14 +209,14 @@ namespace Steamworks
 							.Where( x => x != null ) 
 							.SelectMany( x => x );
 
-			_recContaining = allRec.Where( x => x.ContainsIngredient( this ) ).ToArray();
+			_recContaining = [.. allRec.Where( x => x.ContainsIngredient( this ) )];
 			return _recContaining;
 		}
 
 		public static bool operator ==( InventoryDef a, InventoryDef b )
 		{
-			if ( Object.ReferenceEquals( a, null ) )
-				return Object.ReferenceEquals( b, null );
+			if ( a is null )
+				return b is null;
 
 			return a.Equals( b );
 		}

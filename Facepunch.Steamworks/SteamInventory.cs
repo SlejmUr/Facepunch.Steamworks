@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Runtime.InteropServices;
-using System.Text;
 using System.Threading.Tasks;
 using Steamworks.Data;
 
@@ -54,7 +53,7 @@ namespace Steamworks
 			if ( Definitions == null )
 				return;
 
-			_defMap = new Dictionary<int, InventoryDef>();
+			_defMap = [];
 
 			foreach ( var d in Definitions )
 			{
@@ -150,7 +149,7 @@ namespace Steamworks
 			if ( !gotPrices )
 				return null;
 
-			return defs.Select( x => new InventoryDef( x ) ).ToArray();
+			return [.. defs.Select( x => new InventoryDef( x ) )];
 		}
 
 		/// <summary>
@@ -172,7 +171,7 @@ namespace Steamworks
 			if ( !Internal.GetItemDefinitionIDs( defs, ref num ) )
 				return null;
 
-			return defs.Select( x => new InventoryDef( x ) ).ToArray();
+			return [.. defs.Select( x => new InventoryDef( x ) )];
 		}
 
 		/// <summary>

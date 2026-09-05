@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Runtime.InteropServices;
-using System.Text;
 using System.Threading.Tasks;
 using Steamworks.Data;
 
@@ -93,7 +91,7 @@ namespace Steamworks
 		public static bool IndicateAchievementProgress( string achName, int curProg, int maxProg )
 		{
 			if ( string.IsNullOrEmpty( achName ) )
-				throw new ArgumentNullException( "Achievement string is null or empty" );
+				throw new ArgumentNullException( nameof( achName ), "Achievement string is null or empty" );
 
 			if ( curProg >= maxProg )
 				throw new ArgumentException( $" Current progress [{curProg}] arguement toward achievement greater than or equal to max [{maxProg}]" );

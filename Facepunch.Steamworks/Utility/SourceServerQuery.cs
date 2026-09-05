@@ -11,12 +11,11 @@ namespace Steamworks
 {
 	internal static class SourceServerQuery
 	{
-		private static readonly byte[] A2S_SERVERQUERY_GETCHALLENGE = { 0x55, 0xFF, 0xFF, 0xFF, 0xFF };
+		private static readonly byte[] A2S_SERVERQUERY_GETCHALLENGE = [ 0x55, 0xFF, 0xFF, 0xFF, 0xFF ];
 		//      private static readonly byte A2S_PLAYER = 0x55;
 		private const byte A2S_RULES = 0x56;
 
-        private static readonly Dictionary<IPEndPoint, Task<Dictionary<string, string>>> PendingQueries =
-            new Dictionary<IPEndPoint, Task<Dictionary<string, string>>>();
+        private static readonly Dictionary<IPEndPoint, Task<Dictionary<string, string>>> PendingQueries = [];
 
         internal static Task<Dictionary<string, string>> GetRules( ServerInfo server )
         {
@@ -48,15 +47,13 @@ namespace Steamworks
         {
             try
             {
-                using (var client = new UdpClient())
-                {
-                    client.Client.SendTimeout = 3000;
-                    client.Client.ReceiveTimeout = 3000;
-                    client.Connect(endpoint);
+				using var client = new UdpClient();
+				client.Client.SendTimeout = 3000;
+				client.Client.ReceiveTimeout = 3000;
+				client.Connect( endpoint );
 
-                    return await GetRules(client);
-                }
-            }
+				return await GetRules( client );
+			}
             catch (System.Exception)
             {
                 //Console.Error.WriteLine( e.Message );
@@ -100,34 +97,32 @@ namespace Steamworks
 				var result = await client.ReceiveAsync();
 				var buffer = result.Buffer;
 
-				using ( var br = new BinaryReader( new MemoryStream( buffer ) ) )
+				using var br = new BinaryReader( new MemoryStream( buffer ) );
+				var header = br.ReadInt32();
+
+				if ( header == -1 )
 				{
-					var header = br.ReadInt32();
-
-					if ( header == -1 )
-					{
-						var unsplitdata = new byte[buffer.Length - br.BaseStream.Position];
-						Buffer.BlockCopy( buffer, (int)br.BaseStream.Position, unsplitdata, 0, unsplitdata.Length );
-						return unsplitdata;
-					}
-					else if ( header == -2 )
-					{
-						int requestId = br.ReadInt32();
-						packetNumber = br.ReadByte();
-						packetCount = br.ReadByte();
-						int splitSize = br.ReadInt32();
-					}
-					else
-					{
-						throw new System.Exception( "Invalid Header" );
-					}
-
-					if ( packets == null ) packets = new byte[packetCount][];
-
-					var data = new byte[buffer.Length - br.BaseStream.Position];
-					Buffer.BlockCopy( buffer, (int)br.BaseStream.Position, data, 0, data.Length );
-					packets[packetNumber] = data;
+					var unsplitdata = new byte[buffer.Length - br.BaseStream.Position];
+					Buffer.BlockCopy( buffer, (int)br.BaseStream.Position, unsplitdata, 0, unsplitdata.Length );
+					return unsplitdata;
 				}
+				else if ( header == -2 )
+				{
+					int requestId = br.ReadInt32();
+					packetNumber = br.ReadByte();
+					packetCount = br.ReadByte();
+					int splitSize = br.ReadInt32();
+				}
+				else
+				{
+					throw new System.Exception( "Invalid Header" );
+				}
+
+				packets ??= new byte[packetCount][];
+
+				var data = new byte[buffer.Length - br.BaseStream.Position];
+				Buffer.BlockCopy( buffer, (int)br.BaseStream.Position, data, 0, data.Length );
+				packets[packetNumber] = data;
 			}
 			while ( packets.Any( p => p == null ) );
 

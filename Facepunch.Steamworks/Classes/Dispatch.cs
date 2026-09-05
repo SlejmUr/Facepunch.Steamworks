@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 using Steamworks.Data;
-using Steamworks;
 using System.Linq;
 
 namespace Steamworks
@@ -123,7 +122,7 @@ namespace Steamworks
 		/// could be an issue is if the callback list is modified in the continuation
 		/// which would only happen if starting or shutting down in the callback.
 		/// </summary>
-		static List<Action<IntPtr>> actionsToCall = new List<Action<IntPtr>>();
+		static List<Action<IntPtr>> actionsToCall = [];
 
 		/// <summary>
 		/// A callback is a general global message

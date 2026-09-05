@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Runtime.InteropServices;
-using System.Text;
 using System.Threading.Tasks;
 using Steamworks.Data;
 
@@ -362,7 +359,7 @@ namespace Steamworks
 			public string Msg;
 		}
 
-		private static System.Collections.Concurrent.ConcurrentQueue<DebugMessage> debugMessages = new System.Collections.Concurrent.ConcurrentQueue<DebugMessage>();
+		private static readonly System.Collections.Concurrent.ConcurrentQueue<DebugMessage> debugMessages = new();
 
 		/// <summary>
 		/// This can be called from other threads - so we're going to queue these up and process them in a safe place.
@@ -411,7 +408,7 @@ namespace Steamworks
 			int value = 0;
 			NetConfigType dtype = NetConfigType.Int32;
 			int* ptr = &value;
-			UIntPtr size = new UIntPtr( sizeof( int ) );
+			UIntPtr size = new( sizeof( int ) );
 			var result = Internal.GetConfigValue( type, NetConfigScope.Global, IntPtr.Zero, ref dtype, (IntPtr) ptr, ref size );
 			if ( result != NetConfigResult.OK )
 				return 0;
@@ -430,7 +427,7 @@ namespace Steamworks
 			float value = 0;
 			NetConfigType dtype = NetConfigType.Float;
 			float* ptr = &value;
-			UIntPtr size = new UIntPtr( sizeof( float ) );
+			UIntPtr size = new( sizeof( float ) );
 			var result = Internal.GetConfigValue( type, NetConfigScope.Global, IntPtr.Zero, ref dtype, (IntPtr)ptr, ref size );
 			if ( result != NetConfigResult.OK )
 				return 0;

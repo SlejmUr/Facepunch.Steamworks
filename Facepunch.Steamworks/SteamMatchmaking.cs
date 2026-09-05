@@ -145,7 +145,7 @@ namespace Steamworks
 		/// </summary>
 		public static event Action<Lobby, Friend, string> OnChatMessage;
 
-		public static LobbyQuery LobbyList => new LobbyQuery();
+		public static LobbyQuery LobbyList => new();
 
 		/// <summary>
 		/// Creates a new invisible lobby. Call <see cref="Lobby.SetPublic"/> to take it online.

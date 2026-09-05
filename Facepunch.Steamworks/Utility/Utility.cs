@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Net;
 using System.Runtime.InteropServices;
 using System.Text;
@@ -17,7 +15,7 @@ namespace Steamworks
             if ( ptr == IntPtr.Zero )
                 return default;
 
-            return (T)Marshal.PtrToStructure( ptr, typeof( T ) );
+            return Marshal.PtrToStructure<T>( ptr);
         }
 
         static internal object ToType( this IntPtr ptr, System.Type t )
@@ -50,54 +48,52 @@ namespace Steamworks
         {
 			var decimaled = price.ToString("0.00");
 
-            switch (currency)
-            {
-                case "AED": return $"{decimaled}د.إ";
-                case "ARS": return $"${decimaled} ARS";
-                case "AUD": return $"A${decimaled}";
-                case "BRL": return $"R${decimaled}";
-                case "CAD": return $"C${decimaled}";
-                case "CHF": return $"Fr. {decimaled}";
-                case "CLP": return $"${decimaled} CLP";
-                case "CNY": return $"{decimaled}元";
-                case "COP": return $"COL$ {decimaled}";
-                case "CRC": return $"₡{decimaled}";
-                case "EUR": return $"€{decimaled}";
-                case "SEK": return $"{decimaled}kr";
-                case "GBP": return $"£{decimaled}";
-                case "HKD": return $"HK${decimaled}";
-                case "ILS": return $"₪{decimaled}";
-                case "IDR": return $"Rp{decimaled}";
-                case "INR": return $"₹{decimaled}";
-                case "JPY": return $"¥{decimaled}";
-                case "KRW": return $"₩{decimaled}";
-                case "KWD": return $"KD {decimaled}";
-                case "KZT": return $"{decimaled}₸";
-                case "MXN": return $"Mex${decimaled}";
-                case "MYR": return $"RM {decimaled}";
-                case "NOK": return $"{decimaled} kr";
-                case "NZD": return $"${decimaled} NZD";
-                case "PEN": return $"S/. {decimaled}";
-                case "PHP": return $"₱{decimaled}";
-                case "PLN": return $"{decimaled}zł";
-                case "QAR": return $"QR {decimaled}";
-                case "RUB": return $"{decimaled}₽";
-                case "SAR": return $"SR {decimaled}";
-                case "SGD": return $"S${decimaled}";
-                case "THB": return $"฿{decimaled}";
-                case "TRY": return $"₺{decimaled}";
-                case "TWD": return $"NT$ {decimaled}";
-                case "UAH": return $"₴{decimaled}";
-                case "USD": return $"${decimaled}";
-                case "UYU": return $"$U {decimaled}"; // yes the U goes after $
-                case "VND": return $"₫{decimaled}";
-                case "ZAR": return $"R {decimaled}";
-
-                // TODO - check all of them https://partner.steamgames.com/doc/store/pricing/currencies
-
-                default: return $"{decimaled} {currency}";
-            }
-        }
+			return currency switch
+			{
+				"AED" => $"{decimaled}د.إ",
+				"ARS" => $"${decimaled} ARS",
+				"AUD" => $"A${decimaled}",
+				"BRL" => $"R${decimaled}",
+				"CAD" => $"C${decimaled}",
+				"CHF" => $"Fr. {decimaled}",
+				"CLP" => $"${decimaled} CLP",
+				"CNY" => $"{decimaled}元",
+				"COP" => $"COL$ {decimaled}",
+				"CRC" => $"₡{decimaled}",
+				"EUR" => $"€{decimaled}",
+				"SEK" => $"{decimaled}kr",
+				"GBP" => $"£{decimaled}",
+				"HKD" => $"HK${decimaled}",
+				"ILS" => $"₪{decimaled}",
+				"IDR" => $"Rp{decimaled}",
+				"INR" => $"₹{decimaled}",
+				"JPY" => $"¥{decimaled}",
+				"KRW" => $"₩{decimaled}",
+				"KWD" => $"KD {decimaled}",
+				"KZT" => $"{decimaled}₸",
+				"MXN" => $"Mex${decimaled}",
+				"MYR" => $"RM {decimaled}",
+				"NOK" => $"{decimaled} kr",
+				"NZD" => $"${decimaled} NZD",
+				"PEN" => $"S/. {decimaled}",
+				"PHP" => $"₱{decimaled}",
+				"PLN" => $"{decimaled}zł",
+				"QAR" => $"QR {decimaled}",
+				"RUB" => $"{decimaled}₽",
+				"SAR" => $"SR {decimaled}",
+				"SGD" => $"S${decimaled}",
+				"THB" => $"฿{decimaled}",
+				"TRY" => $"₺{decimaled}",
+				"TWD" => $"NT$ {decimaled}",
+				"UAH" => $"₴{decimaled}",
+				"USD" => $"${decimaled}",
+				"UYU" => $"$U {decimaled}",// yes the U goes after $
+				"VND" => $"₫{decimaled}",
+				"ZAR" => $"R {decimaled}",
+				// TODO - check all of them https://partner.steamgames.com/doc/store/pricing/currencies
+				_ => $"{decimaled} {currency}",
+			};
+		}
 
 		static readonly byte[] readBuffer = new byte[1024 * 8];
 

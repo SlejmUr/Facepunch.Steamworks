@@ -102,7 +102,7 @@ namespace Steamworks
 			return Internal.GetGlyphSVGForActionOrigin( origin, 0 );
 		}
 
-		internal static Dictionary<string, InputDigitalActionHandle_t> DigitalHandles = new Dictionary<string, InputDigitalActionHandle_t>();
+		internal static Dictionary<string, InputDigitalActionHandle_t> DigitalHandles = [];
 		internal static InputDigitalActionHandle_t GetDigitalActionHandle( string name )
 		{
 			if ( DigitalHandles.TryGetValue( name, out var val ) )
@@ -113,7 +113,7 @@ namespace Steamworks
 			return val;
 		}
 
-		internal static Dictionary<string, InputAnalogActionHandle_t> AnalogHandles = new Dictionary<string, InputAnalogActionHandle_t>();
+		internal static Dictionary<string, InputAnalogActionHandle_t> AnalogHandles = [];
 		internal static InputAnalogActionHandle_t GetAnalogActionHandle( string name )
 		{
 			if ( AnalogHandles.TryGetValue( name, out var val ) )
@@ -124,7 +124,7 @@ namespace Steamworks
 			return val;
 		}
 
-		internal static Dictionary<string, InputActionSetHandle_t> ActionSets = new Dictionary<string, InputActionSetHandle_t>();
+		internal static Dictionary<string, InputActionSetHandle_t> ActionSets = [];
 		internal static InputActionSetHandle_t GetActionSetHandle( string name )
 		{
 			if ( ActionSets.TryGetValue( name, out var val ) )

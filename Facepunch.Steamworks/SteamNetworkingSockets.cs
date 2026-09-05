@@ -1,9 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.InteropServices;
-using System.Text;
-using System.Threading.Tasks;
 using Steamworks.Data;
 
 namespace Steamworks
@@ -42,7 +38,7 @@ namespace Steamworks
 	
 #region SocketInterface
 
-		static readonly Dictionary<uint, SocketManager> SocketInterfaces = new Dictionary<uint, SocketManager>();
+		static readonly Dictionary<uint, SocketManager> SocketInterfaces = [];
 
 		internal static SocketManager GetSocketManager( uint id )
 		{
@@ -63,7 +59,7 @@ namespace Steamworks
 #endregion
 
 #region ConnectionInterface
-		static readonly Dictionary<uint, ConnectionManager> ConnectionInterfaces = new Dictionary<uint, ConnectionManager>();
+		static readonly Dictionary<uint, ConnectionManager> ConnectionInterfaces = [];
 
 		internal static ConnectionManager GetConnectionManager( uint id )
 		{
@@ -85,7 +81,7 @@ namespace Steamworks
 
 
 
-		internal void InstallEvents( bool server )
+		internal static void InstallEvents( bool server )
 		{
 			Dispatch.Install<SteamNetConnectionStatusChangedCallback_t>( ConnectionStatusChanged, server );
 			Dispatch.Install<SteamNetworkingFakeIPResult_t>( FakeIPResult, server );
@@ -311,7 +307,7 @@ namespace Steamworks
 		{
 			var t = new T();
 			var options = Array.Empty<NetKeyValue>();
-			t.Socket = Internal.CreateListenSocketP2PFakeIP( 0, options.Length, options );
+			t.Socket = Internal.CreateListenSocketP2PFakeIP( fakePortIndex, options.Length, options );
 			t.Initialize();
 			SetSocketManager( t.Socket.Id, t );
 			return t;
@@ -328,7 +324,7 @@ namespace Steamworks
 		public static SocketManager CreateRelaySocketFakeIP( int fakePortIndex, ISocketManager intrface )
 		{
 			var options = Array.Empty<NetKeyValue>();
-			var socket = Internal.CreateListenSocketP2PFakeIP( 0, options.Length, options );
+			var socket = Internal.CreateListenSocketP2PFakeIP( fakePortIndex, options.Length, options );
 
 			var t = new SocketManager
 			{

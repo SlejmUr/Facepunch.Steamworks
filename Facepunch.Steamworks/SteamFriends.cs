@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Runtime.InteropServices;
-using System.Text;
 using System.Threading.Tasks;
 using Steamworks.Data;
 
@@ -19,7 +17,7 @@ namespace Steamworks
 			SetInterface( server, new ISteamFriends( server ) );
 			if ( Interface.Self == IntPtr.Zero ) return false;
 
-			richPresence = new Dictionary<string, string>();
+			richPresence = [];
 
 			InstallEvents();
 
@@ -28,7 +26,7 @@ namespace Steamworks
 
 		static Dictionary<string, string> richPresence;
 
-		internal void InstallEvents()
+		internal static void InstallEvents()
 		{
 			Dispatch.Install<PersonaStateChange_t>( x => OnPersonaStateChange?.Invoke( new Friend( x.SteamID ) ) );
 			Dispatch.Install<GameRichPresenceJoinRequested_t>( x => OnGameRichPresenceJoinRequested?.Invoke( new Friend( x.SteamIDFriend), x.ConnectUTF8() ) );
@@ -410,7 +408,7 @@ namespace Steamworks
                 }
             } while (result != null && resultCount < result.Value.TotalResultCount);
 
-            return steamIds.ToArray();
+            return [.. steamIds];
         }
 
 		/// <summary>

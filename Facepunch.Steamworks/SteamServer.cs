@@ -1,8 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Runtime.InteropServices;
-using System.Text;
-using System.Threading.Tasks;
 using Steamworks.Data;
 
 namespace Steamworks
@@ -146,7 +143,7 @@ namespace Steamworks
 			openInterfaces.Add( t );
 		}
 
-		static readonly List<SteamClass> openInterfaces = new List<SteamClass>();
+		static readonly List<SteamClass> openInterfaces = [];
 
 		internal static void ShutdownInterfaces()
 		{
@@ -360,7 +357,7 @@ namespace Steamworks
 			Internal.BUpdateUserData( steamid, name, (uint)score );
 		}
 
-		static Dictionary<string, string> KeyValue = new Dictionary<string, string>();
+		static readonly Dictionary<string, string> KeyValue = [];
 
 		/// <summary>
 		/// Sets a Key Value. These can be anything you like, and are accessible

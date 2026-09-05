@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Runtime.InteropServices;
-using System.Text;
-using System.Threading.Tasks;
 using Steamworks.Data;
 
 namespace Steamworks
@@ -24,7 +20,7 @@ namespace Steamworks
 			return true;
 		}
 
-		internal void InstallEvents( bool server )
+		internal static void InstallEvents( bool server )
 		{
 			Dispatch.Install<SteamRemotePlaySessionConnected_t>( x => OnSessionConnected?.Invoke( x.SessionID ), server );
 			Dispatch.Install<SteamRemotePlaySessionDisconnected_t>( x => OnSessionDisconnected?.Invoke( x.SessionID ), server );

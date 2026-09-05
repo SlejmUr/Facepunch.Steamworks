@@ -1,8 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Runtime.InteropServices;
-using System.Text;
-using System.Threading.Tasks;
 using Steamworks.Data;
 
 namespace Steamworks
@@ -27,7 +24,7 @@ namespace Steamworks
 			return true;
 		}
 
-		internal void InstallEvents( bool server )
+		internal static void InstallEvents( bool server )
 		{
 			Dispatch.Install<AvailableBeaconLocationsUpdated_t>( x => OnBeaconLocationsUpdated?.Invoke(), server );
 			Dispatch.Install<ActiveBeaconsUpdated_t>( x => OnActiveBeaconsUpdated?.Invoke(), server );

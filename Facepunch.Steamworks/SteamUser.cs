@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Runtime.InteropServices;
-using System.Text;
 using System.Threading.Tasks;
 using Steamworks.Data;
 
@@ -24,7 +23,7 @@ namespace Steamworks
 
 			InstallEvents();
 
-			richPresence = new Dictionary<string, string>();
+			richPresence = [];
 			SampleRate = OptimalSampleRate;
 
 			return true;
@@ -155,7 +154,7 @@ namespace Steamworks
 			}
 		}
 
-		static byte[] readBuffer = new byte[1024*128];
+		static readonly byte[] readBuffer = new byte[1024*128];
 
 		/// <summary>
 		/// Reads the voice data and returns the number of bytes written.
@@ -326,7 +325,7 @@ namespace Steamworks
 
 				return new AuthTicket()
 				{
-					Data = data.Take( (int)ticketLength ).ToArray(),
+					Data = [.. data.Take( (int)ticketLength )],
 					Handle = ticket
 				};
 			}

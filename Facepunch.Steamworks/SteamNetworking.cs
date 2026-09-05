@@ -1,9 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.InteropServices;
-using System.Text;
-using System.Threading.Tasks;
 using Steamworks.Data;
 
 namespace Steamworks
@@ -35,14 +30,14 @@ namespace Steamworks
 		/// Invoked when a <see cref="SteamId"/> wants to send the current user a message. You should respond by calling <see cref="AcceptP2PSessionWithUser(SteamId)"/>
 		/// if you want to recieve their messages.
 		/// </summary>
-		public static Action<SteamId> OnP2PSessionRequest;
+		public static event Action<SteamId> OnP2PSessionRequest;
 
 		/// <summary>
 		/// Invoked when packets can't get through to the specified user.
 		/// All queued packets unsent at this point will be dropped, further attempts
 		/// to send will retry making the connection (but will be dropped if we fail again).
 		/// </summary>
-		public static Action<SteamId, P2PSessionError> OnP2PConnectionFailed;
+		public static event Action<SteamId, P2PSessionError> OnP2PConnectionFailed;
 
 		/// <summary>
 		/// This should be called in response to a <see cref="OnP2PSessionRequest"/>.

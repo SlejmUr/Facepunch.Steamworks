@@ -1,8 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.InteropServices;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Steamworks.Data;
@@ -105,7 +102,7 @@ namespace Steamworks
 						if ( ct.IsCancellationRequested )
 							break;
 
-						await Task.Delay( milisecondsUpdateDelay );
+						await Task.Delay( milisecondsUpdateDelay, ct );
 					}
 				}
 				finally
@@ -115,7 +112,7 @@ namespace Steamworks
 			}
 
 			progress?.Invoke( 0.2f );
-			await Task.Delay( milisecondsUpdateDelay );
+			await Task.Delay( milisecondsUpdateDelay, ct );
 
 			//Wait for downloading completion
 			{
@@ -129,7 +126,7 @@ namespace Steamworks
 					if ( !item.IsDownloading && item.IsInstalled )
 						break;
 
-					await Task.Delay( milisecondsUpdateDelay );
+					await Task.Delay( milisecondsUpdateDelay, ct );
 				}
 			}
 
@@ -160,13 +157,13 @@ namespace Steamworks
 
 		public static async Task<bool> StartPlaytimeTracking(PublishedFileId fileId)
 		{
-			var result = await Internal.StartPlaytimeTracking(new[] {fileId}, 1);
+			var result = await Internal.StartPlaytimeTracking( [fileId], 1 );
 			return result.Value.Result == Result.OK;
 		}
 		
 		public static async Task<bool> StopPlaytimeTracking(PublishedFileId fileId)
 		{
-			var result = await Internal.StopPlaytimeTracking(new[] {fileId}, 1);
+			var result = await Internal.StopPlaytimeTracking( [fileId], 1);
 			return result.Value.Result == Result.OK;
 		}
 		

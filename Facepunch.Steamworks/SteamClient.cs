@@ -1,9 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Runtime.InteropServices;
-using System.Text;
-using System.Threading.Tasks;
-using Steamworks.Data;
 
 namespace Steamworks
 {
@@ -18,10 +14,10 @@ namespace Steamworks
 		public static void Init( uint appid, bool asyncCallbacks = true )
 		{
 			if ( initialized )
-				throw new System.Exception( "Calling SteamClient.Init but is already initialized" );
+				throw new Exception( "Calling SteamClient.Init but is already initialized" );
 
-			System.Environment.SetEnvironmentVariable( "SteamAppId", appid.ToString() );
-			System.Environment.SetEnvironmentVariable( "SteamGameId", appid.ToString() );
+			Environment.SetEnvironmentVariable( "SteamAppId", appid.ToString() );
+			Environment.SetEnvironmentVariable( "SteamGameId", appid.ToString() );
 
 			var interfaceVersions = Helpers.BuildVersionString(
 				ISteamApps.Version,
@@ -48,7 +44,7 @@ namespace Steamworks
 			var result = SteamAPI.Init( interfaceVersions, out var error );
 			if ( result != SteamAPIInitResult.OK )
 			{
-				throw new System.Exception( $"SteamApi_Init failed with {result} - error: {error}" );
+				throw new Exception( $"SteamApi_Init failed with {result} - error: {error}" );
 			}
 
 			AppId = appid;
@@ -111,7 +107,7 @@ namespace Steamworks
 			}
 		}
 
-		static readonly List<SteamClass> openInterfaces = new List<SteamClass>();
+		static readonly List<SteamClass> openInterfaces = [];
 
 		internal static void ShutdownInterfaces()
 		{
