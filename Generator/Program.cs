@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -18,8 +19,12 @@ namespace Generator
 
 			Definitions = def;
 
-			var generator = new CodeWriter( def );
+			Directory.CreateDirectory( "../Facepunch.Steamworks" );
+			Directory.CreateDirectory( "../Facepunch.Steamworks/Generated" );
+			Directory.CreateDirectory( "../Facepunch.Steamworks/Generated/Interfaces" );
 
+			var generator = new CodeWriter( def );
+			
             generator.ToFolder( "../Facepunch.Steamworks/Generated/" );
         }
     }
