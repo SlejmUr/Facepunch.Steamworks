@@ -33,7 +33,7 @@
 		<None Include="steam_api.dll">
 			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
 			<Pack>true</Pack>
-			<PackagePath>lib</PackagePath>
+			<PackagePath>content</PackagePath>
 		</None>
 	</ItemGroup>
 

@@ -19,7 +19,7 @@ namespace Steamworks
         public async Task GetAchievement()
         {
 			var result = await SteamServerStats.RequestUserStatsAsync( Garry );
-			Assert.AreEqual( result, Result.OK );
+			Assert.AreEqual( Result.OK, result );
 
 			var value = SteamServerStats.GetAchievement( Garry, "COLLECT_100_WOOD" );
 			Assert.IsTrue( value );

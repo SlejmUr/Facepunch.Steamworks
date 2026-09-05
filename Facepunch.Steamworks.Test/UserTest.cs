@@ -40,7 +40,7 @@ namespace Steamworks
 		public void OptimalSampleRate()
 		{
 			var rate = SteamUser.OptimalSampleRate;
-			Assert.AreNotEqual( rate, 0 );
+			Assert.AreNotEquivalent<uint>( 0, rate );
 			Console.WriteLine( $"User.OptimalSampleRate: {SteamUser.OptimalSampleRate}" );
 		}
 
@@ -54,7 +54,7 @@ namespace Steamworks
 		[TestMethod]
 		public void SteamID()
 		{
-			Assert.AreNotEqual( 0, SteamClient.SteamId.Value );
+			Assert.AreNotEquivalent<ulong>( 0, SteamClient.SteamId.Value );
 			Console.WriteLine( $"User.SteamID: {SteamClient.SteamId.Value}" );
 		}
 
@@ -63,14 +63,14 @@ namespace Steamworks
 		{
 			var ticket = SteamUser.GetAuthSessionTicket( SteamClient.SteamId );
 
-			Assert.AreNotEqual( 0, ticket.Handle );
-			Assert.AreNotEqual( 0, ticket.Data.Length );
+			Assert.AreNotEquivalent<uint>( 0, ticket.Handle );
+			Assert.AreNotEquivalent<int>( 0, ticket.Data.Length );
 			Console.WriteLine( $"ticket.Handle: {ticket.Handle}" );
 			Console.WriteLine( $"ticket.Data: { string.Join( "", ticket.Data.Select( x => x.ToString( "x" ) ) ) }" );
 
 			var result = SteamUser.BeginAuthSession( ticket.Data, SteamClient.SteamId );
 			Console.WriteLine( $"result: { result }" );
-			Assert.AreEqual( result, BeginAuthResult.OK );
+			Assert.AreEqual( BeginAuthResult.OK, result );
 
 			SteamUser.EndAuthSession( SteamClient.SteamId );
 		}
@@ -80,8 +80,8 @@ namespace Steamworks
 		{
 			var ticket = await SteamUser.GetAuthSessionTicketAsync( SteamClient.SteamId, 5.0 );
 
-			Assert.AreNotEqual( 0, ticket.Handle );
-			Assert.AreNotEqual( 0, ticket.Data.Length );
+			Assert.AreNotEquivalent<ulong>( 0, ticket.Handle );
+			Assert.AreNotEquivalent<int>( 0, ticket.Data.Length );
 			Console.WriteLine( $"ticket.Handle: {ticket.Handle}" );
 			Console.WriteLine( $"ticket.Data: { string.Join( "", ticket.Data.Select( x => x.ToString( "x" ) ) ) }" );
 		}
@@ -91,8 +91,8 @@ namespace Steamworks
 		{
 			var ticket = await SteamUser.GetAuthTicketForWebApiAsync( "Test" );
 
-			Assert.AreNotEqual( 0, ticket.Handle );
-			Assert.AreNotEqual( 0, ticket.Data.Length );
+			Assert.AreNotEquivalent<ulong>( 0, ticket.Handle );
+			Assert.AreNotEquivalent<int>( 0, ticket.Data.Length );
 			Console.WriteLine( $"ticket.Handle: {ticket.Handle}" );
 			Console.WriteLine( $"ticket.Data: { string.Join( "", ticket.Data.Select( x => x.ToString( "x" ) ) ) }" );
 		}

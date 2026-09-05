@@ -35,7 +35,7 @@ namespace Steamworks
 		public async Task PlayerCountAsync()
 		{
 			var players = await SteamUserStats.PlayerCountAsync();
-			Assert.AreNotEqual( players, -1 );
+			Assert.AreNotEqual( -1, players );
 			Console.WriteLine( $"players:	{players}" );
 		}
 		
@@ -55,7 +55,7 @@ namespace Steamworks
 				await Task.Delay( 10 );
 			}
 
-			Assert.AreEqual( result, Result.OK );
+			Assert.AreEqual( Result.OK, result );
 
 		}
 
