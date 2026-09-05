@@ -412,5 +412,25 @@ namespace Steamworks
 			return returnValue;
 		}
 		
+		#region FunctionMeta
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamApps_SetGamePerformanceSetting", CallingConvention = Platform.CC)]
+		private static extern void _SetGamePerformanceSetting( IntPtr self, GamePerformanceSetting setting );
+		
+		#endregion
+		internal void SetGamePerformanceSetting( GamePerformanceSetting setting )
+		{
+			_SetGamePerformanceSetting( Self, setting );
+		}
+		
+		#region FunctionMeta
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamApps_SetGameRenderResolution", CallingConvention = Platform.CC)]
+		private static extern void _SetGameRenderResolution( IntPtr self, uint unWidth, uint unHeight );
+		
+		#endregion
+		internal void SetGameRenderResolution( uint unWidth, uint unHeight )
+		{
+			_SetGameRenderResolution( Self, unWidth, unHeight );
+		}
+		
 	}
 }

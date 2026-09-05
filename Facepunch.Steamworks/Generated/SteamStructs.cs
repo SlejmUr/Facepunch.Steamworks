@@ -61,6 +61,8 @@ namespace Steamworks.Data
 		[MarshalAs(UnmanagedType.ByValArray, SizeConst = 128)] // byte[] m_szGameTags
 		internal byte[] GameTags; // m_szGameTags char [128]
 		internal ulong SteamID; // m_steamID CSteamID
+		internal int CurrentFriendCount; // m_nCurrentFriendCount int
+		internal int TotalFriendCount; // m_nTotalFriendCount int
 		
 	}
 	

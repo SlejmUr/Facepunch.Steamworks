@@ -284,7 +284,7 @@ namespace Steamworks
 		/// <summary>
 		/// Gets whether or not Steam itself is running on the Steam Deck.
 		/// </summary>
-		public static bool IsRunningOnSteamDeck => Internal.IsSteamRunningOnSteamDeck();
+		public static bool IsRunningOnSteamDeck => Internal.IsRunningOnSteamHardware() == SteamHardwareType.SteamDeck;
 
 
 		/// <summary>
